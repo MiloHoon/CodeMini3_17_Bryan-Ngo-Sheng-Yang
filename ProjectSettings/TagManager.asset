@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - TurningPlatform
+  - Cone
+  - Crate
+  - Coin
   layers:
   - Default
   - TransparentFX

@@ -6,8 +6,16 @@ public class PlayerController : MonoBehaviour
 {
     //Player Speed
     float speed = 5.0f;
+    float zPointA = 12.5f;
+    float zPointB = 17.0f;
+    int crateTriggered = 0;
+    bool isForward = true;
+
     public Rigidbody PlayerRb;
     public Animator PlayerAnimation;
+
+    public GameObject TurningPlatform;
+    public GameObject MovingPlatform;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +63,45 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
             PlayerAnimation.SetBool("isMove", false);
+        }
+
+        //Trigger MovingPlatform
+        if (crateTriggered == 1)
+        if (MovingPlatform.transform.position.z < zPointB && isForward)
+        {
+            MovingPlatform.transform.Translate(Vector3.forward * Time.deltaTime * 2.5f);
+        }
+        else if (MovingPlatform.transform.position.z > zPointA && !isForward)
+        {
+            MovingPlatform.transform.Translate(Vector3.back * Time.deltaTime * 2.5f);
+        }
+        else
+        {
+            isForward = !isForward;
+        }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        //Collision With Crate
+        if (collision.gameObject.CompareTag("Crate"))
+        {
+            crateTriggered = 1;
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        //Collision With Cone
+        if (other.gameObject.CompareTag("Cone"))
+        {
+            TurningPlatform.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        //Collision With Coin
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            Destroy(gameObject);
         }
     }
 }
