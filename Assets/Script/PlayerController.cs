@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject TurningPlatform;
     public GameObject MovingPlatform;
+    public GameObject Target;
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +81,12 @@ public class PlayerController : MonoBehaviour
         {
             isForward = !isForward;
         }
+
+        //Player Fall Off The Level
+        if (transform.position.y < -5)
+        {
+            SceneManager.LoadScene("LoseScene");
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -98,10 +106,11 @@ public class PlayerController : MonoBehaviour
             TurningPlatform.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
-        //Collision With Coin
-        if (other.gameObject.CompareTag("Coin"))
+        //Collision With Target
+        if (other.gameObject.CompareTag("Target"))
         {
-            Destroy(gameObject);
+            Destroy(other.gameObject);
+            SceneManager.LoadScene("WinScene");
         }
     }
 }

@@ -7,7 +7,7 @@ TagManager:
   - TurningPlatform
   - Cone
   - Crate
-  - Coin
+  - Target
   layers:
   - Default
   - TransparentFX
