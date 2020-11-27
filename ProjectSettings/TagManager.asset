@@ -8,6 +8,9 @@ TagManager:
   - Cone
   - Crate
   - Target
+  - Plane
+  - MovingPlatform
+  - Coin
   layers:
   - Default
   - TransparentFX
